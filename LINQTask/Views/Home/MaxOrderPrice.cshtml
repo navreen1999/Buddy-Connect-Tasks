@@ -1,0 +1,41 @@
+﻿@model IEnumerable<LINQTask.Models.ViewModel.MaxOrderPrice>
+
+@{
+    ViewData["Title"] = "MaxOrderPrice";
+}
+
+<h1>MaxOrderPrice</h1>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PurchaseOrderID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @item.Date.ToString("MMMM")-@item.Date.Year
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PurchaseOrderID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+           
+        </tr>
+}
+    </tbody>
+</table>

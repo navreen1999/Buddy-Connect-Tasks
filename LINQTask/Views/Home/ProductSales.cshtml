@@ -1,0 +1,42 @@
+﻿@model IEnumerable<LINQTask.Models.ViewModel.ProductInfo>
+
+@{
+    ViewData["Title"] = "ProductSales";
+}
+
+<h1>ProductSales</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Date)
+            </th>
+           
+            <th>
+                @Html.DisplayNameFor(model => model.ProductName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Quantity)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @item.Date.ToString("MMMM")-@item.Date.Year
+            </td>
+           
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Quantity)
+            </td>
+          
+        </tr>
+}
+    </tbody>
+</table>
