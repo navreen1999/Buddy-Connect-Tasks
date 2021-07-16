@@ -1,0 +1,106 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+<script src="~/Scripts/jquery-3.6.0.min.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
+<body>
+    <div>
+        <form method="post">
+            <table>
+                <tr>
+                    <td>Country</td>
+                    <td>
+                        <select id="country">
+                            @foreach (var country in ViewBag.Country)
+                            {
+                                <option value="@country.Country_id">@country.Country_name</option>
+                            }
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>State</td>
+                    <td>
+                        <select id="state">
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>City</td>
+                    <td>
+                        <select id="city">
+                        </select>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</body>
+@section scripts{
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#country").on("change", function () {
+            //alert("country");
+            var countryId = $("#country option:selected").val();
+            //alert(countryId);
+            //console.log(countryId);
+            $.ajax({
+                type: 'GET',
+                url: "Home/GetStates",
+                data: { Country_id: countryId },
+                dataType: 'JSON',
+                success: function (resp)
+                {
+
+                    if (resp.msg == "success")
+                    {
+                        var stringifystate = JSON.stringify(resp.data);
+                        var states = JSON.parse(stringifystate);
+                        console.log(states);
+                        var s = '<option value="-1">Please select a value</option>'
+                        for (var i = 0; i < states.length; i++) {
+                            s += '<option value="' + states[i].Id + '">' + states[i].StateName + '</option>';
+                        }
+                        $("#state").html(s);
+                        //alert(states);
+                    }
+                },
+                error: function (resp) {
+                    alert("Error");
+                }
+            });
+        });
+        $("#state").on("change", function () {
+            var stateid = $("#state option:selected").val();
+           // console.log(stateid);
+            $.ajax({
+                type: 'GET',
+                url: "Home/GetCity",
+                data: { State_id: stateid },
+                dataType: 'JSON',
+                success: function (response)
+                {
+                    if (response.msg == "success")
+                    {
+                        var stringifycity = JSON.stringify(response.data);
+                        var citydetails = JSON.parse(stringifycity);
+                       // console.log(citydetails);
+                        var opt = '<option value="-1">Please select a value</option>'
+                      for (var j = 0; j < citydetails.length; j++) {
+                           opt += '<option value="' + citydetails[j].City_id + '">' + citydetails[j].City_Name + '</option>';
+                        }
+                      $("#city").html(opt);
+                    }
+                },
+                error: function (response) {
+                    alert("Unexpected error happened");
+                }
+            });
+
+        });
+    });
+</script>
+    }
