@@ -1,0 +1,149 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <title></title>
+</head>
+<body>
+  
+    <div>
+        <center >
+            <h3>Puzzle Game</h3>
+            <table style="border:10px solid blue">
+                <tr>
+                    <td>
+                        <div class="puzz" id="d1" value="1">
+
+                            <p>1</p>
+                            
+                        </div>
+                    </td>
+                    <td>
+                        <div class="puzz" id="d2" value="2"><p>2</p></div>
+                    </td>
+                    <td>
+                        <div class="puzz" id="d3" value="3"><p>3</p></div>
+                    </td>
+                    <td>
+                        <div class="puzz" id="d4" value="4"><p>4</p></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="puzz" id="d5" value="5"><p>5</p></div>
+                    </td>
+                    <td>
+                        <div class="puzz" id="d6" value="6"><p>6</p></div>
+                    </td>
+                    <td>
+                        <div class="puzz" id="d7" value="7"><p>7</p></div>
+                    </td>
+                    <td>
+                        <div class="puzz" id="d8" value="8"><p>8</p></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="puzz" id="d9" value="8"><p>8</p></div>
+                    </td>
+                    <td>
+                        <div class="puzz" id="d10" value="7"><p>7</p></div>
+                    </td>
+                    <td>
+                        <div class="puzz" id="d11" value="6"><p>6</p></div>
+                    </td>
+                    <td>
+                        <div class="puzz" id="d12" value="5"><p>5</p></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="puzz" id="d13" value="4"><p>4</p></div>
+                    </td>
+                    <td>
+                        <div class="puzz" id="d14" value="3"><p>3</p></div>
+                    </td>
+                    <td>
+                        <div class="puzz" id="d15" value="2"><p>2</p></div>
+                    </td>
+                    <td>
+                        <div class="puzz" id="d16" value="1"><p>1</p></div>
+                    </td>
+                </tr>
+            </table>
+        </center>
+    </div>
+</body>
+</html>
+<!--<script src="jquery/jquery-3.6.0.js"></script>-->
+<script>
+    var id, val, tempid,tempvalue, timesClicked = 0;
+    $(document).ready(function () {
+        $(".puzz").click(function () {
+
+            id = $(this).attr("id");
+            val = $(this).attr("value");
+            if (timesClicked == 0) {
+                $("#" + id).css({ 'background-color': 'blue', 'color':'gold'  });
+                //console.log(timesClicked, id, val);
+                timesClicked++;
+                tempid = id;
+                tempvalue = val;
+                id = null;
+                val = null;
+            }
+
+            else {
+                var id1, val1;
+                    id1 = $(this).attr("id");
+                    val1 = $(this).attr("value");
+                   // console.log(timesClicked, id1, val1);
+                if (tempid != id1 && tempvalue == val1)
+                {
+                    $("#" + tempid).css({ "background-color": "green", "color": "gold"});
+                    $("#" + id1).css({ "background-color": "green", "color": "gold"});
+                        timesClicked = 0;
+                        //console.log(id1, val1,tempid,tempvalue, "success");
+                }
+                else if (tempid == id1 || tempvalue != val1)
+                    {
+                    //console.log(id1, val1,tempid, tempvalue, "failure");
+                    $("#" + tempid).css({ "background-color":"black","color":"black"});
+                    $("#" + id1).css({ "background-color": "black", "color": "black" });
+                        timesClicked = 0;
+
+                       
+                    }
+               
+                
+               
+            }
+            
+            
+
+            
+                    
+        });
+    });
+</script>
+<style>
+    .puzz {
+        background-color: black;
+        height: 80px;
+        width: 80px;
+        margin: 5px;
+        
+    }
+    p{
+      
+       text-align:center;
+       vertical-align:middle;
+       line-height:80px;
+       font-family:Britannic;
+       
+       font-size:20px;
+    }
+   
+</style>

@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "dgSpecHash": "Su/e0HXtEpUmMgAEEg9Dr09GdyitrP6qp2XD3qVd6iLQifA7qkDi9j2v5TAtbcuRPZq/7vFAJOa9iRLQgRDiDA==",
+  "success": true,
+  "projectFilePath": "C:\\repos\\ajax task\\AJAXAssignment\\AJAXAssignment.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\LENOVO\\.nuget\\packages\\bootstrap\\5.0.2\\bootstrap.5.0.2.nupkg.sha512",
+    "C:\\Users\\LENOVO\\.nuget\\packages\\jquery\\3.6.0\\jquery.3.6.0.nupkg.sha512",
+    "C:\\Users\\LENOVO\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512"
+  ],
+  "logs": []
+}

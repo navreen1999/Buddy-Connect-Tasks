@@ -1,0 +1,116 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+@*<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>*@
+
+<html>
+<title>Save Information</title>
+<head>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <div>
+        <label>First Name:</label>
+        <input type="text" name="FirstName" id="firstName" />
+        <div />
+        <br />
+        <div>
+            <label>Last Name:</label>
+            <input type="text" name="LastName" id="lastName" />
+        </div>
+        <div>
+            <label>Gender:</label>
+            <input type="radio" name="gender" id="male" value="male" />Male
+            <input type="radio" name="gender" id="female" value="female" />FeMale
+        </div>
+        <div>
+            <label>Email:</label>
+            <input type="text" name="Email"  id="email" />
+        </div>
+        <div>
+            <label>Skills:</label>
+            <input type="checkbox" class="skill" name="C" id="c" value="c" />C
+            <input type="checkbox" class="skill" name="Python" id="python" value="python" />Python
+            <input type="checkbox" class="skill" name="SQL" id="sql" value="sql" />SQL
+        </div>
+        <input type="button" id="btn" value="Save" />
+        <table id="details" style="visibility:hidden" >
+            <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Gender</th>
+                <th>Email</th>
+                <th>Skills</th>
+            </tr>
+        </table>
+</body>
+@section scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#btn").on("click",function () {
+                console.log($("#firstName").val());
+                var genderselected = $("input[name='gender']:checked").val();
+                console.log(genderselected);
+                var selectskills = [];
+                var skillselected = $(".skill:checked").each(function (item) {
+                    selectskills.push(this.value);
+                });
+                var Object = {
+                    FirstName: $("#firstName").val(),
+                    LastName: $("#lastName").val(),
+                    Gender: genderselected,
+                    Skills: skillselected,
+                    Email: $("#email").val()
+
+                };
+                //console.log(Object.FirstName, Object.LastName, Object.Gender, Object.Email,Object.Skills);//, Object.LastName, Object.Email, Object.Gender, Object.Skills);
+                //console.log(skillselected);
+                var tbldata = JSON.stringify(Object);
+                var obj = JSON.parse(tbldata);
+                $.ajax({
+
+
+                    type: "POST",
+                    url: "Home/CheckEmail",
+                    data: { employee: obj },
+                    dataType: 'JSON',
+                    success: function (resp) {
+                       // console.log(resp.msg, resp.data.IsEmailAvailable);
+                        if (resp.msg == "success") {
+                            var empstringify = JSON.stringify(resp);
+                            var empdata = JSON.parse(empstringify);
+                            //var newlen = Object.keys(empstringify).length;
+                            //var len = empdata.length;
+                            //console.log(empdata.FirstName);
+                           //console.log(len);
+                            $("#details").css("visibility", "visible");
+                            var tr = ''
+                            $.each(empdata, function (i, item) {
+                                tr += '<tr><td>' + item[i].FirstName +
+                                    '</td><td>' + item[i].LastName +
+                                    '</td><td>' + item[i].Gender +
+                                    '</td><td>' + item[i].Email +
+                                    '</td><td>' + item[i].Skills + '</td></tr>';
+                            });
+                            $("#details").append(tr);
+                        }
+                        if (resp.msg == "failed") {
+                            alert("Email is not available");
+                        }
+                    },
+                    error: function (resp) {
+                        alert("Unable to process your request");
+                    }
+                   
+                });
+        });
+        });
+    
+    </script>
+}
+</html>

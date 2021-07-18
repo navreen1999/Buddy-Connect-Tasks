@@ -1,0 +1,83 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<html>
+<title>Save Information</title>
+<head>
+
+</head>
+<body>
+       <div>
+        <label>First Name:</label>
+        <input type="text" name="FirstName" id="firstName" />
+        <div/>
+        <br />
+        <div>
+            <label>Last Name:</label>
+            <input type="text" name="LastName" id="lastName" />
+        </div>
+       <div>
+        <label>Gender:</label>
+           <input type="radio" name="gender" id="male" value="male" />Male
+           <input type="radio" name="gender" id="female" value="female" />FeMale
+        </div>
+           <div>
+               <label>Email:</label>
+               <input type="text" name="Email" value="email" id="email" />
+           </div>
+           <div>
+               <label>Skills:</label>
+               <input type="checkbox" class="skill" name="C" id="c" value="c" />C
+               <input type="checkbox" class="skill" name="Python" id="python" value="python" />Python
+               <input type="checkbox" class="skill" name="SQL" id="sql" value="sql" />SQL
+           </div>
+           <input type="button" id="btn" value="Save" onclick="save()" />
+           <table id="details">
+               <tr>
+                   <th >First Name</th>
+                   <th >Last Name</th>
+                   <th>Gender</th>
+                   <th >Email</th>
+                   <th >Skills</th>
+               </tr>
+           </table>
+</body>
+@section scripts{ 
+<script type="text/javascript">
+    function save() {
+        var fname = $("#firstName").val();
+        var lname = $("#lastName").val();
+        var gender = $("input[name='gender']:checked").val();
+        var email = $("#email").val();
+        var selectvalues = [];
+        $(".skill:checked").each(function (item) {
+            selectvalues.push(this.value);
+        })
+        $.ajax({
+            type: POST,
+            url: "home/CheckEmail",
+            data: { email: ("#email".val()) },
+            dataType: 'Json',
+            success: function (response) {
+                var stringObj = JSON.stringify(response);
+                if (response.data == true) {
+                    $.each(response, function (i, item) {
+                        var rows = $("<tr>").append(
+                            $("<td>").text(item.fname),
+                            $("<td>").text(item.lname),
+                            $("<td>").text(item.gender),
+                            $("<td>").text(item.email),
+                            $("<td>").text(item.selectvalues)
+                        )
+                    })
+
+                }
+            }
+        })
+    }
+</script>
+}
+</html>
